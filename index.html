@@ -1594,33 +1594,26 @@ $(&#39;head&#39;).append(&#39;&lt;meta name=&quot;apple-mobile-web-app-status-ba
     log('PROMISE', [e.reason && e.reason.message || e.reason]);
   });
 setTimeout(function() {
-  log('VP', ['window.innerWidth:', window.innerWidth]);
-  log('VP', ['window.outerWidth:', window.outerWidth]);
-  log('VP', ['document.documentElement.clientWidth:', document.documentElement.clientWidth]);
-  log('VP', ['screen.width:', screen.width]);
-  log('VP', ['devicePixelRatio:', window.devicePixelRatio]);
+  function box(sel) {
+    var el = document.querySelector(sel);
+    if (!el) return sel + ': NAO EXISTE';
+    var r = el.getBoundingClientRect();
+    var s = getComputedStyle(el);
+    return sel + ': top=' + Math.round(r.top) + ' left=' + Math.round(r.left) +
+           ' w=' + Math.round(r.width) + ' h=' + Math.round(r.height) +
+           ' display=' + s.display + ' overflow=' + s.overflow;
+  }
+  log('BOX', [box('#ui-bar')]);
+  log('BOX', [box('#ui-bar-body')]);
+  log('BOX', [box('.beat-logo')]);
+  log('BOX', [box('.stats-bar')]);
+  log('BOX', [box('.stat')]);
+  log('BOX', [box('#story')]);
+  log('BOX', [box('.passage')]);
+  log('BOX', [box('.timeline')]);
+  log('BOX', [box('.actions')]);
+  log('VP', ['innerHeight:', window.innerHeight]);
   log('VP', ['matchMedia 900:', window.matchMedia('(max-width: 900px)').matches]);
-  log('VP', ['matchMedia 600:', window.matchMedia('(max-width: 600px)').matches]);
-  log('VP', ['matchMedia 2000:', window.matchMedia('(max-width: 2000px)').matches]);
-  
-  // Lê a meta viewport
-  var vp = document.querySelector('meta[name="viewport"]');
-  log('VP', ['meta viewport:', vp ? vp.content : 'NENHUMA']);
-  log('VP', ['quantas meta viewport:', document.querySelectorAll('meta[name="viewport"]').length]);
-  
-  // Verifica html/body widths
-  log('VP', ['html scrollWidth:', document.documentElement.scrollWidth]);
-  log('VP', ['body scrollWidth:', document.body.scrollWidth]);
-  
-  // Procura elementos largos
-  var biggest = {el: null, w: 0};
-  document.querySelectorAll('*').forEach(function(el) {
-    var w = el.getBoundingClientRect().width;
-    if (w > biggest.w) {
-      biggest = {el: el.tagName + (el.id ? '#'+el.id : '') + (el.className ? '.'+String(el.className).split(' ')[0] : ''), w: Math.round(w)};
-    }
-  });
-  log('VP', ['elemento mais largo:', biggest.el, biggest.w]);
 }, 2000);
 })();
 </script>
