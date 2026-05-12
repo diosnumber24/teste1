@@ -1326,7 +1326,34 @@ body[data-tags~="ending-neutral"] .ending-stat .stat-bar::before { background: r
     .ending-timeline { padding-top: 24px !important; }
     .ending-timeline h1 { font-size: 2em; margin-bottom: 10px !important; }
     .ending-timeline p { font-size: 1.05em; margin-bottom: 5px !important;  }
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript">$(document).on(':passagestart', function () {
+}
+	@media (max-width: 900px) {
+    #story {
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+    }
+    .passage {
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .timeline {
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .actions {
+        flex: 0 0 auto !important;
+    }
+}
+	</style><script role="script" id="twine-user-script" type="text/twine-javascript">$(document).on(':passagestart', function () {
     ['consumo', 'cuidado', 'circular', 'industria'].forEach(function (stat) {
         if (typeof State.variables[stat] === 'number') {
             // Clamp entre -60 e +60
