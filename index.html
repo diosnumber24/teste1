@@ -1586,13 +1586,28 @@ $(&#39;head&#39;).append(&#39;&lt;meta name=&quot;apple-mobile-web-app-status-ba
     log('PROMISE', [e.reason && e.reason.message || e.reason]);
   });
   setTimeout(function() {
-    log('CHECK', ['ui-bar-body filhos:', document.querySelectorAll('#ui-bar-body *').length]);
-    log('CHECK', ['.stat encontrados:', document.querySelectorAll('.stat').length]);
-    log('CHECK', ['.beat-logo encontrados:', document.querySelectorAll('.beat-logo').length]);
-    log('CHECK', ['viewport altura:', window.innerHeight]);
-    log('CHECK', ['document altura:', document.documentElement.scrollHeight]);
-    log('CHECK', ['SugarCube?', typeof SugarCube !== 'undefined' ? 'sim' : 'NAO']);
-  }, 2000);
+  function box(sel) {
+    var el = document.querySelector(sel);
+    if (!el) return sel + ': NAO EXISTE';
+    var r = el.getBoundingClientRect();
+    var s = getComputedStyle(el);
+    return sel + ': top=' + Math.round(r.top) + ' left=' + Math.round(r.left) +
+           ' w=' + Math.round(r.width) + ' h=' + Math.round(r.height) +
+           ' display=' + s.display + ' pos=' + s.position +
+           ' overflow=' + s.overflow + ' z=' + s.zIndex;
+  }
+  log('BOX', [box('#ui-bar')]);
+  log('BOX', [box('#ui-bar-body')]);
+  log('BOX', [box('.beat-logo')]);
+  log('BOX', [box('.stats-bar')]);
+  log('BOX', [box('#story')]);
+  log('BOX', [box('.passage')]);
+  log('BOX', [box('.timeline')]);
+  log('BOX', [box('.actions')]);
+  log('CHECK', ['body overflow:', getComputedStyle(document.body).overflow]);
+  log('CHECK', ['html overflow:', getComputedStyle(document.documentElement).overflow]);
+  log('CHECK', ['matchMedia 900:', window.matchMedia('(max-width: 900px)').matches]);
+}, 2000);
 })();
 </script>
 </body>
